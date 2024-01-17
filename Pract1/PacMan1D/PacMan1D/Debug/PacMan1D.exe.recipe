@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\c00286125\Desktop\2dgp-Danny-delaney\PacMan1D\Debug\PacMan1D.exe</FullPath>
+      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract1\PacMan1D\Debug\PacMan1D.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\c00286125\Desktop\2dgp-Danny-delaney\PacMan1D\PacMan1D\ASSETS\FONTS\ariblk.ttf</FullPath>
+      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract1\PacMan1D\PacMan1D\ASSETS\FONTS\ariblk.ttf</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\c00286125\Desktop\2dgp-Danny-delaney\PacMan1D\PacMan1D\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
+      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract1\PacMan1D\PacMan1D\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

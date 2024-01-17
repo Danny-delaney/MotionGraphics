@@ -4,9 +4,9 @@
 /// </summary>
 
 #include "Game.h"
+#include <ctime>
+#include <cstdlib>
 #include <iostream>
-
-
 
 /// <summary>
 /// default constructor
@@ -111,6 +111,8 @@ void Game::update(sf::Time t_deltaTime)
 	}
 	move();
 	ghostMove();
+	collision();
+	restartBerries();
 }
 
 /// <summary>
@@ -122,7 +124,10 @@ void Game::render()
 	m_window.draw(backGround);
 	for (int i = 0; i < 8; i++)
 	{
-		m_window.draw(berries[i]);
+		if (!berriesAte[i])
+		{
+			m_window.draw(berries[i]);
+		}
 	}
 	m_window.draw(ghost);
 	m_window.draw(pacMan);
@@ -158,19 +163,25 @@ void Game::ghostMove()
 	sf::Vector2f pos = ghost.getPosition();
 	if (pacmanPos.x > pos.x)
 	{
-		pos.x += ghostSpeed;
-		if (pos.x >= 850)
+		if (super)
 		{
-			pos.x = -49;
+			pos.x -= ghostSpeed;
+		}
+		else
+		{
+			pos.x += ghostSpeed;
 		}
 		ghost.setPosition(pos);
 	}
 	else
 	{
-		pos.x -= ghostSpeed;
-		if (pos.x <= -50)
+		if (super)
 		{
-			pos.x = 849;
+			pos.x += ghostSpeed;
+		}
+		else
+		{
+			pos.x -= ghostSpeed;
 		}
 		ghost.setPosition(pos);
 	}
@@ -178,9 +189,54 @@ void Game::ghostMove()
 
 void Game::collision()
 {
-	if (pacMan.getGlobalBounds().intersects(ghost.getGlobalBounds()))
+	if (pacMan.getGlobalBounds().intersects(ghost.getGlobalBounds() ))
 	{
 		m_exitGame = true;
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		if (pacMan.getGlobalBounds().intersects(berries[i].getGlobalBounds()))
+		{
+			berriesAte[i] = true;
+			if (i == powerBerry)
+			{
+				super = true;
+			}
+		}
+	}
+}
+
+void Game::restartBerries()
+{
+	bool allAte = true;
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (!berriesAte[i])
+		{
+			allAte = false;
+		}
+	}
+	if (allAte)
+	{
+		berries[powerBerry].setRadius(20);
+		berries[powerBerry].setOrigin(20.0f, 20.0f);
+		berries[powerBerry].setFillColor(sf::Color::Green);
+		berries[powerBerry].setPosition((100.0f * powerBerry) + 50.0f, 300.0f);
+
+		powerBerry = rand() % 8;
+		for (int i = 0; i < 8; i++)
+		{
+			berriesAte[i] = false;
+
+			if (i == powerBerry)
+			{
+				berries[i].setRadius(30);
+				berries[i].setOrigin(30.0f, 30.0f);
+				berries[i].setFillColor(sf::Color::Cyan);
+				berries[i].setPosition((100.0f * i) + 50.0f, 300.0f);
+			}
+		}
 	}
 }
 
@@ -210,15 +266,29 @@ void Game::setupSprite()
 	ghost.setFillColor(sf::Color::Red);
 	ghost.setPosition(600.0f, 300.0f);
 
+	powerBerry = rand() % 8;
 	for (int i = 0; i < 8; i++)
 	{
-		berries[i].setRadius(20);
-		berries[i].setOrigin(20.0f, 20.0f);
-		berries[i].setFillColor(sf::Color::Green);
-		berries[i].setPosition((100.0f * i) + 50.0f, 300.0f);
+		if (i == powerBerry)
+		{
+			berries[powerBerry].setRadius(30);
+			berries[powerBerry].setOrigin(30.0f, 30.0f);
+			berries[powerBerry].setFillColor(sf::Color::Cyan);
+			berries[powerBerry].setPosition((100.0f * powerBerry) + 50.0f, 300.0f);
+			berriesAte[powerBerry] = false;
+		}
+		else
+		{
+			berries[i].setRadius(20);
+			berries[i].setOrigin(20.0f, 20.0f);
+			berries[i].setFillColor(sf::Color::Green);
+			berries[i].setPosition((100.0f * i) + 50.0f, 300.0f);
+			berriesAte[i] = false;
+		}
 	}
 
 	backGround.setSize(sf::Vector2f(800.0f, 200.0f));
 	backGround.setFillColor(sf::Color::Black);
 	backGround.setPosition(0.0f, 200.0f);
 }
+

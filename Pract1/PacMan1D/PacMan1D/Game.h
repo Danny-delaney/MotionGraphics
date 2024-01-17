@@ -30,6 +30,7 @@ private:
 	void move();
 	void ghostMove();
 	void collision();
+	void restartBerries();
 	
 	void setupFontAndText();
 	void setupSprite();
@@ -40,6 +41,11 @@ private:
 	sf::RectangleShape ghost; //ghost entity
 	sf::CircleShape berries[8]; // berries array
 	sf::RectangleShape backGround; //backdrop entity
+
+	bool super = false;
+
+	bool berriesAte[8];
+	int powerBerry;
 
 	int speed = 4;
 	int ghostSpeed = 3;
