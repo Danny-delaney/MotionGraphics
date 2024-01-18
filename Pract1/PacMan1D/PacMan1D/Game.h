@@ -31,24 +31,29 @@ private:
 	void ghostMove();
 	void collision();
 	void restartBerries();
+	void handleSuper();
+	void ghostRespawn();
 	
 	void setupFontAndText();
 	void setupSprite();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
+	sf::Text score; //text used for score 
 	sf::CircleShape pacMan; // pacman enitity
 	sf::RectangleShape ghost; //ghost entity
 	sf::CircleShape berries[8]; // berries array
 	sf::RectangleShape backGround; //backdrop entity
 
 	bool super = false;
+	int superTime = 0;
 
 	bool berriesAte[8];
 	int powerBerry;
+	int scoreNum = 0;
 
 	int speed = 4;
-	int ghostSpeed = 3;
+	int ghostSpeed = 1;
 	int dir = 1;
 
 	bool m_exitGame; // control exiting game

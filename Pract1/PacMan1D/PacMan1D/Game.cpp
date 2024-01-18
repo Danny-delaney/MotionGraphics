@@ -113,6 +113,8 @@ void Game::update(sf::Time t_deltaTime)
 	ghostMove();
 	collision();
 	restartBerries();
+	handleSuper();
+	ghostRespawn();
 }
 
 /// <summary>
@@ -120,7 +122,7 @@ void Game::update(sf::Time t_deltaTime)
 /// </summary>
 void Game::render()
 {
-	m_window.clear(sf::Color::Blue);
+	m_window.clear(sf::Color::Black);
 	m_window.draw(backGround);
 	for (int i = 0; i < 8; i++)
 	{
@@ -131,6 +133,7 @@ void Game::render()
 	}
 	m_window.draw(ghost);
 	m_window.draw(pacMan);
+	m_window.draw(score);
 	m_window.display();
 }
 
@@ -191,16 +194,29 @@ void Game::collision()
 {
 	if (pacMan.getGlobalBounds().intersects(ghost.getGlobalBounds() ))
 	{
-		m_exitGame = true;
+		if (super)
+		{
+			ghost.setPosition(400.0f, -100.0f);
+			scoreNum += 100;
+			score.setString(std::to_string(scoreNum));
+		}
+		else
+		{
+			m_exitGame = true;
+		}
 	}
 	for (int i = 0; i < 8; i++)
 	{
 		if (pacMan.getGlobalBounds().intersects(berries[i].getGlobalBounds()))
 		{
 			berriesAte[i] = true;
+			berries[i].setPosition((100.0f * i) + 50.0f, 700.0f);
+			scoreNum += 10;
+			score.setString(std::to_string(scoreNum));
 			if (i == powerBerry)
 			{
 				super = true;
+				superTime = 100;
 			}
 		}
 	}
@@ -224,10 +240,16 @@ void Game::restartBerries()
 		berries[powerBerry].setFillColor(sf::Color::Green);
 		berries[powerBerry].setPosition((100.0f * powerBerry) + 50.0f, 300.0f);
 
+		scoreNum += 50;
+		score.setString(std::to_string(scoreNum));
+
+		ghostSpeed += 1;
+
 		powerBerry = rand() % 8;
 		for (int i = 0; i < 8; i++)
 		{
 			berriesAte[i] = false;
+			berries[i].setPosition((100.0f * i) + 50.0f, 300.0f);
 
 			if (i == powerBerry)
 			{
@@ -240,6 +262,33 @@ void Game::restartBerries()
 	}
 }
 
+void Game::handleSuper()
+{
+	if (super)
+	{
+		if (superTime <= 0)
+		{
+			super = false;
+			ghost.setFillColor(sf::Color::Red);
+		}
+		else
+		{
+			superTime -= 1;
+			ghost.setFillColor(sf::Color::Blue);
+		}
+	}
+}
+
+void Game::ghostRespawn()
+{
+	sf::Vector2f pos = ghost.getPosition();
+	if (pos.y < 300)
+	{
+		pos.y++;
+		ghost.setPosition(pos);
+	}
+}
+
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
@@ -249,6 +298,10 @@ void Game::setupFontAndText()
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
+	score.setFont(m_ArialBlackfont);
+	score.setCharacterSize(60);
+	score.setPosition(0.0f, 540.0f);
+	score.setString(std::to_string(scoreNum));
 }
 
 /// <summary>
@@ -266,7 +319,7 @@ void Game::setupSprite()
 	ghost.setFillColor(sf::Color::Red);
 	ghost.setPosition(600.0f, 300.0f);
 
-	powerBerry = rand() % 8;
+	powerBerry = 7;
 	for (int i = 0; i < 8; i++)
 	{
 		if (i == powerBerry)
@@ -290,5 +343,7 @@ void Game::setupSprite()
 	backGround.setSize(sf::Vector2f(800.0f, 200.0f));
 	backGround.setFillColor(sf::Color::Black);
 	backGround.setPosition(0.0f, 200.0f);
+	backGround.setOutlineThickness(10.0f);
+	backGround.setOutlineColor(sf::Color::Magenta);
 }
 
