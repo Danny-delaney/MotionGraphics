@@ -110,11 +110,17 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	move();
-	ghostMove();
 	collision();
 	restartBerries();
 	handleSuper();
-	ghostRespawn();
+	if (ghostDied)
+	{
+		ghostRespawn();
+	}
+	else
+	{
+		ghostMove();
+	}
 }
 
 /// <summary>
@@ -130,6 +136,10 @@ void Game::render()
 		{
 			m_window.draw(berries[i]);
 		}
+	}
+	if (ghostDied) 
+	{
+		m_window.draw(ghostWarning);
 	}
 	m_window.draw(ghost);
 	m_window.draw(pacMan);
@@ -168,7 +178,7 @@ void Game::ghostMove()
 	{
 		if (super)
 		{
-			pos.x -= ghostSpeed;
+			pos.x -= ghostSpeed - 0.5;
 		}
 		else
 		{
@@ -180,7 +190,7 @@ void Game::ghostMove()
 	{
 		if (super)
 		{
-			pos.x += ghostSpeed;
+			pos.x += ghostSpeed - 0.5;
 		}
 		else
 		{
@@ -194,15 +204,19 @@ void Game::collision()
 {
 	if (pacMan.getGlobalBounds().intersects(ghost.getGlobalBounds() ))
 	{
-		if (super)
+		if (!ghostDied)
 		{
-			ghost.setPosition(400.0f, -100.0f);
-			scoreNum += 100;
-			score.setString(std::to_string(scoreNum));
-		}
-		else
-		{
-			m_exitGame = true;
+			if (super)
+			{
+				scoreNum += 100;
+				ghostDied = true;
+				ghost.setFillColor(sf::Color::White);
+				score.setString(std::to_string(scoreNum));
+			}
+			else
+			{
+				m_exitGame = true;
+			}
 		}
 	}
 	for (int i = 0; i < 8; i++)
@@ -243,7 +257,8 @@ void Game::restartBerries()
 		scoreNum += 50;
 		score.setString(std::to_string(scoreNum));
 
-		ghostSpeed += 1;
+		float speedDiffrence = MAX_GHOST_SPEED - ghostSpeed;
+		ghostSpeed += (speedDiffrence/2);
 
 		powerBerry = rand() % 8;
 		for (int i = 0; i < 8; i++)
@@ -282,10 +297,28 @@ void Game::handleSuper()
 void Game::ghostRespawn()
 {
 	sf::Vector2f pos = ghost.getPosition();
-	if (pos.y < 300)
+	ghost.setFillColor(sf::Color::Transparent);
+	if (pos.x > 400)
 	{
-		pos.y++;
+		ghostWarning.setPosition(790.0f, 200.0f);
+		pos.x += ghostSpeed;
 		ghost.setPosition(pos);
+		if (pos.x > 850)
+		{
+			ghostDied = false;
+			ghost.setFillColor(sf::Color::Red);
+		}
+	}
+	else
+	{
+		ghostWarning.setPosition(0.0f, 200.0f);
+		pos.x -= ghostSpeed;
+		ghost.setPosition(pos);
+		if (pos.x < -50)
+		{
+			ghostDied = false;
+			ghost.setFillColor(sf::Color::Red);
+		}
 	}
 }
 
@@ -345,5 +378,9 @@ void Game::setupSprite()
 	backGround.setPosition(0.0f, 200.0f);
 	backGround.setOutlineThickness(10.0f);
 	backGround.setOutlineColor(sf::Color::Magenta);
+
+	ghostWarning.setSize(sf::Vector2f(10.0f, 200.0f));
+	ghostWarning.setFillColor(sf::Color::White);
+	ghostWarning.setPosition(0.0f, 200.0f);
 }
 

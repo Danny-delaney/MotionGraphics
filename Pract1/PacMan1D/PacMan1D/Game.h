@@ -44,6 +44,7 @@ private:
 	sf::RectangleShape ghost; //ghost entity
 	sf::CircleShape berries[8]; // berries array
 	sf::RectangleShape backGround; //backdrop entity
+	sf::RectangleShape ghostWarning; //warning entity
 
 	bool super = false;
 	int superTime = 0;
@@ -53,7 +54,12 @@ private:
 	int scoreNum = 0;
 
 	int speed = 4;
-	int ghostSpeed = 1;
+
+	const float MAX_GHOST_SPEED = 3.5;
+
+	bool ghostDied = false;
+
+	float ghostSpeed = 1;
 	int dir = 1;
 
 	bool m_exitGame; // control exiting game
