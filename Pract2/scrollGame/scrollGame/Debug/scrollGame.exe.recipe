@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract2\scrollGame\Debug\scrollGame.exe</FullPath>
+      <FullPath>C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\Debug\scrollGame.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\ASSETS\FONTS\ariblk.ttf</FullPath>
+      <FullPath>C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\ASSETS\FONTS\ariblk.ttf</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\c00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
+      <FullPath>C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

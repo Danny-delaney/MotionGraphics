@@ -1,6 +1,6 @@
 /// <summary>
-/// author Pete Lowe May 2019
-/// you need to change the above line or lose marks
+/// @author danny delaney
+/// @date feb 2024
 /// </summary>
 #ifndef GAME_HPP
 #define GAME_HPP
@@ -28,13 +28,21 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	void terrianMovement();
+	void movement();
+	void collision();
+
+	void restart();
 	
 	void setupFontAndText();
 	void setupSprite();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
+	sf::Text loseMessage;
 	bool m_exitGame; // control exiting game
+	bool lose = false;
+
+	int speed = 0;
 
 	static const int terrainNUM = 50;
 
@@ -53,6 +61,7 @@ private:
 		1,1,0,1,1,
 	};
 	sf::RectangleShape terrain[50];
+	sf::RectangleShape player;
 
 };
 

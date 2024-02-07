@@ -1,8 +1,6 @@
 /// <summary>
-/// @author Peter Lowe
-/// @date May 2019
-///
-/// you need to change the above lines or lose marks
+/// @author danny delaney
+/// @date feb 2024
 /// </summary>
 
 #include "Game.h"
@@ -91,6 +89,21 @@ void Game::processKeys(sf::Event t_event)
 	{
 		m_exitGame = true;
 	}
+	if (sf::Keyboard::Left == t_event.key.code)
+	{
+		speed = -2;
+	}
+	if (sf::Keyboard::Right == t_event.key.code)
+	{
+		speed = 2;
+	}
+	if (sf::Keyboard::Space == t_event.key.code)
+	{
+		if (lose = true)
+		{
+			restart();
+		}
+	}
 }
 
 /// <summary>
@@ -99,7 +112,12 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	terrianMovement();
+	if (!lose)
+	{
+		movement();
+		terrianMovement();
+		collision();
+	}
 	if (m_exitGame)
 	{
 		m_window.close();
@@ -112,11 +130,19 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
-	for (int i = 0; i <= 49; i++)
+	if (lose)
 	{
-		m_window.draw(terrain[i]);
+		m_window.draw(loseMessage);
 	}
-	m_window.display();
+	else
+	{
+		for (int i = 0; i <= 49; i++)
+		{
+			m_window.draw(terrain[i]);
+		}
+		m_window.draw(player);
+		m_window.display();
+	}
 }
 
 void Game::terrianMovement()
@@ -129,6 +155,54 @@ void Game::terrianMovement()
 	}
 }
 
+void Game::movement()
+{
+	sf::Vector2f pos = player.getPosition();
+	pos.x += speed;
+	player.setPosition(pos);
+}
+
+void Game::collision()
+{
+	for (int i = 0; i <= (terrainNUM - 1); i++)
+	{
+		if (terrainControl[i] == 1)
+		{
+			if (player.getGlobalBounds().intersects(terrain[i].getGlobalBounds()))
+			{
+				lose = true;
+			}
+		}
+	}
+}
+
+void Game::restart()
+{
+	lose = false;
+	int terrianLevel = -1;
+	for (int i = 0; i <= (terrainNUM - 1); i++)
+	{
+		if (terrainControl[i] == 1)
+		{
+			terrain[i].setFillColor(sf::Color::Blue);
+		}
+		if (terrainControl[i] == 0)
+		{
+			terrain[i].setFillColor(sf::Color::Black);
+		}
+
+		if ((i % COLOUMS) == 0)
+		{
+			terrianLevel++;
+		}
+		terrain[i].setSize(sf::Vector2f(130.0f, 90.0f));
+		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90) - 900);
+	}
+	player.setFillColor(sf::Color::White);
+	player.setPosition(325.0f, 800.0f);
+	player.setSize(sf::Vector2f(20.0f, 20.0f));
+}
+
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
@@ -138,7 +212,9 @@ void Game::setupFontAndText()
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
-
+	loseMessage.setFont(m_ArialBlackfont);
+	loseMessage.setFillColor(sf::Color::White);
+	loseMessage.setString("loser press space to retry");
 }
 
 /// <summary>
@@ -165,4 +241,7 @@ void Game::setupSprite()
 		terrain[i].setSize(sf::Vector2f(130.0f, 90.0f));
 		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90) - 900);
 	}
+	player.setFillColor(sf::Color::White);
+	player.setPosition(325.0f, 800.0f);
+	player.setSize(sf::Vector2f(20.0f, 20.0f));
 }
