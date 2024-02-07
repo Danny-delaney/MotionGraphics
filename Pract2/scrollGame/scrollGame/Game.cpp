@@ -136,22 +136,27 @@ void Game::render()
 	}
 	else
 	{
-		for (int i = 0; i <= 49; i++)
+		for (int i = 0; i <= 249; i++)
 		{
 			m_window.draw(terrain[i]);
 		}
 		m_window.draw(player);
-		m_window.display();
 	}
+	m_window.display();
 }
 
 void Game::terrianMovement()
 {
-	for (int i = 0; i <= (terrainNUM - 1); i++)
+	for (int i = 0; i <= (249); i++)
 	{
 		sf::Vector2f pos = terrain[i].getPosition();
 		pos.y += 2;
 		terrain[i].setPosition(pos);
+	}
+	if (terrain[1].getPosition().y > 900)
+	{
+		lose = true;
+		loseMessage.setString("Winner press space to play again!!");
 	}
 }
 
@@ -164,23 +169,28 @@ void Game::movement()
 
 void Game::collision()
 {
-	for (int i = 0; i <= (terrainNUM - 1); i++)
+	for (int i = 0; i <= (249); i++)
 	{
-		if (terrainControl[i] == 1)
+		if (terrainControl[i] == 1 || terrainControl[i] == 2)
 		{
 			if (player.getGlobalBounds().intersects(terrain[i].getGlobalBounds()))
 			{
 				lose = true;
+				loseMessage.setString("loser press space to restart!");
 			}
 		}
 	}
+}
+
+void Game::shoot()
+{
 }
 
 void Game::restart()
 {
 	lose = false;
 	int terrianLevel = -1;
-	for (int i = 0; i <= (terrainNUM - 1); i++)
+	for (int i = 0; i <= (249); i++)
 	{
 		if (terrainControl[i] == 1)
 		{
@@ -190,13 +200,16 @@ void Game::restart()
 		{
 			terrain[i].setFillColor(sf::Color::Black);
 		}
-
+		if (terrainControl[i] == 2)
+		{
+			terrain[i].setFillColor(sf::Color::Green);
+		}
 		if ((i % COLOUMS) == 0)
 		{
 			terrianLevel++;
 		}
 		terrain[i].setSize(sf::Vector2f(130.0f, 90.0f));
-		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90) - 900);
+		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90) - 4500);
 	}
 	player.setFillColor(sf::Color::White);
 	player.setPosition(325.0f, 800.0f);
@@ -223,7 +236,7 @@ void Game::setupFontAndText()
 void Game::setupSprite()
 {
 	int terrianLevel = -1;
-	for (int i = 0; i <= (terrainNUM-1); i++)
+	for (int i = 0; i <= (249); i++)
 	{
 		if (terrainControl[i] == 1)
 		{
@@ -233,15 +246,26 @@ void Game::setupSprite()
 		{
 			terrain[i].setFillColor(sf::Color::Black);
 		}
+		if (terrainControl[i] == 2)
+		{
+			terrain[i].setFillColor(sf::Color::Green);
+		}
 
 		if ((i % COLOUMS) == 0)
 		{
 			terrianLevel++;
 		}
 		terrain[i].setSize(sf::Vector2f(130.0f, 90.0f));
-		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90) - 900);
+		terrain[i].setPosition(((i % COLOUMS) * 130), (terrianLevel * 90)-4500);
 	}
 	player.setFillColor(sf::Color::White);
 	player.setPosition(325.0f, 800.0f);
 	player.setSize(sf::Vector2f(20.0f, 20.0f));
+
+	for (int i = 0; i <= (9); i++)
+	{
+		bullets[i].setFillColor(sf::Color::Cyan);
+		bullets[i].setRadius(5.0f);
+		terrain[i].setPosition(-5.0f, -5.0f);
+	}
 }

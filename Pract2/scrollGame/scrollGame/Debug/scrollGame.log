@@ -1,6 +1,6 @@
 ﻿  Game.cpp
-C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(199,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(199,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(242,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(242,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  scrollGame.vcxproj -> C:\Users\C00286125\Desktop\MotionGraphics\Pract2\scrollGame\Debug\scrollGame.exe
+C:\Users\116da\OneDrive\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(212,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\116da\OneDrive\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(212,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\116da\OneDrive\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(259,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\116da\OneDrive\Desktop\MotionGraphics\Pract2\scrollGame\scrollGame\Game.cpp(259,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  scrollGame.vcxproj -> C:\Users\116da\OneDrive\Desktop\MotionGraphics\Pract2\scrollGame\Debug\scrollGame.exe
