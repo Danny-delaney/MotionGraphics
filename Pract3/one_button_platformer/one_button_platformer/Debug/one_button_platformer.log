@@ -1,0 +1,12 @@
+﻿  main.cpp
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(33,46): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(88,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(88,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(95,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(95,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(101,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(101,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(148,1): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(156,1): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\c00286125\source\repos\one_button_platformer\one_button_platformer\main.cpp(163,1): warning C4305: '=': truncation from 'double' to 'float'
+  one_button_platformer.vcxproj -> C:\Users\c00286125\source\repos\one_button_platformer\Debug\one_button_platformer.exe
